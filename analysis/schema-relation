@@ -1,0 +1,47 @@
+Relation Names
+passengers
+flights
+bookings
+airports
+flight_routes
+fare_paid
+
+
+Passengers
+- passenger_id int PK
+- firstname varchar
+- lastname varchar
+
+Flights
+- flight_number varchar PK
+- flight_name varchar
+- flight_description varchar
+
+Bookings
+- booking_id int PK
+- flight_route_id FK
+- passenger_id int
+- flight_number varchar
+- departure_date datetime
+- arrival_date datetime
+
+Airports
+- airport_id int PK
+- name varchar
+- country varchar
+- code varchar
+
+Flight Routes
+- flight_route_id int PK
+- destination_airport_id int
+- arrival_airport_id int
+- departure_date datetime
+- arrival_date datetime
+
+Fare Paid
+- fare_id int PK
+- booking_id int
+- amount decimal
+- date_paid datetime
+
+

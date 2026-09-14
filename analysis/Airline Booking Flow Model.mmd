@@ -1,0 +1,51 @@
+---
+config:
+  layout: elk
+---
+erDiagram
+    PASSENGERS   ||--o{ BOOKINGS      : "makes"
+    FLIGHTS      ||--o{ BOOKINGS      : "is booked on"
+    FLIGHTS      ||--|{ FLIGHT_ROUTES : "stops at"
+    AIRPORTS     ||--o{ FLIGHT_ROUTES : "is a stop for"
+
+    PASSENGERS {
+        bigint      passenger_id  PK 
+        varchar full_name        "NOT NULL"
+        varchar email            "NOT NULL, UNIQUE"
+        varchar  phone
+        date        date_of_birth
+        timestamptz created_at       "NOT NULL"
+    }
+
+    FLIGHTS {
+        bigint      flight_id            PK
+        varchar   flight_number           "NOT NULL"
+        timestamptz departure_date     "NOT NULL"
+        timestamptz arrival_date       "NOT NULL"
+        numeric base_fare               "NOT NULL"
+        integer     capacity           "NOT NULL"
+        boolean     is_active               "NOT NULL, default true"
+    }
+
+    BOOKINGS {
+        bigint      booking_id     PK
+        bigint      passenger_id   FK "NOT NULL, ON DELETE RESTRICT"
+        bigint      flight_id      FK "NOT NULL, ON DELETE RESTRICT"
+        timestamptz booking_time         "NOT NULL"
+        numeric fare_paid         "NOT NULL"
+        varchar   seat_number      
+        varchar  booking_status    "NOT NULL"
+    }
+
+    AIRPORTS {
+        integer     airport_id   PK
+        char      code       "NOT NULL, UNIQUE"
+        varchar name    "NOT NULL"
+        varchar  city            "NOT NULL"
+        char      country_code    "NOT NULL"
+    }
+
+    FLIGHT_ROUTES {
+        bigint    flight_id     PK,FK "ON DELETE CASCADE"
+        integer   airport_id    PK,FK "ON DELETE RESTRICT"     
+    }
